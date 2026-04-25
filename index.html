@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central dos Guias</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dark: #8B6914;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --card: #161616;
+    --text: #E8E0D0;
+    --text-muted: #9A8F7E;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .glow {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Profile ── */
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 36px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .avatar-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    animation: spin-slow 8s linear infinite;
+  }
+
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+  .avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--dark);
+    animation: spin-slow 8s linear infinite reverse;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .handle {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .handle span {
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .bio {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.8;
+    max-width: 340px;
+    margin-top: 8px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 8px 0 32px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+  }
+
+  .divider-gem {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  /* ── Links ── */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.25s;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .link-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(201,168,76,0.06), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .link-item::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold-dark));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+  }
+
+  .link-item:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateX(4px);
+  }
+
+  .link-item:hover::before { opacity: 1; }
+  .link-item:hover::after  { transform: scaleY(1); }
+
+  .link-item:nth-child(1) { animation-delay: 0.50s; }
+  .link-item:nth-child(2) { animation-delay: 0.62s; }
+  .link-item:nth-child(3) { animation-delay: 0.74s; }
+  .link-item:nth-child(4) { animation-delay: 0.86s; }
+  .link-item:nth-child(5) { animation-delay: 0.98s; }
+  .link-item:nth-child(6) { animation-delay: 1.10s; }
+
+  .link-icon {
+    width: 42px; height: 42px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .link-item:hover .link-icon { background: rgba(201,168,76,0.18); }
+
+  .link-content { flex: 1; }
+
+  .link-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .link-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .link-arrow {
+    color: var(--gold);
+    font-size: 16px;
+    opacity: 0.5;
+    transition: opacity 0.3s, transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .link-item:hover .link-arrow { opacity: 1; transform: translateX(4px); }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 52px;
+    text-align: center;
+    animation: fadeUp 1s 1.2s ease both;
+  }
+
+  .footer-gems {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .fg { width: 4px; height: 4px; background: var(--gold-dark); transform: rotate(45deg); }
+  .fg.big { width: 6px; height: 6px; background: var(--gold); }
+
+  .footer p {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(154,143,126,0.35);
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 18px 60px; }
+    .handle { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════════
+       PERFIL
+       Para trocar a foto: substitua o emoji 📚 por:
+       <img src="URL_DA_FOTO" alt="Central dos Guias">
+  ════════════════════════════════════════════════════ -->
+  <div class="profile">
+    <div class="avatar-ring">
+      <div class="avatar-inner">
+        <img src="ChatGPT Image 25 de abr. de 2026, 16_45_10.png" alt="Central dos Guias">
+      </div>
+    </div>
+    <div>
+      <div class="handle">@<span>central_dosguias</span></div>
+      <div class="tagline">Conhecimento que Transforma</div>
+      <p class="bio">
+        E-books e guias premium para quem quer evoluir.<br>
+        Acesse nossas lojas e comece sua transformação. ✨
+      </p>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-gem"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="section-title">▸ Meus Links ◂</div>
+
+  <!-- ═══════════════════════════════════════════════════
+       LINKS — edite aqui
+
+       Para ADICIONAR um link: copie um bloco <a> e cole abaixo do último.
+       Para REMOVER um link: apague o bloco <a> inteiro.
+
+       Estrutura de cada link:
+       <a class="link-item" href="URL_DO_SITE" target="_blank">
+         <div class="link-icon">EMOJI</div>
+         <div class="link-content">
+           <div class="link-title">TÍTULO</div>
+           <div class="link-desc">DESCRIÇÃO CURTA</div>
+         </div>
+         <div class="link-arrow">→</div>
+       </a>
+  ════════════════════════════════════════════════════ -->
+  <div class="links">
+
+
+    <a class="link-item" href="https://www.instagram.com/central_dosguias" target="_blank">
+      <div class="link-icon">📸</div>
+      <div class="link-content">
+        <div class="link-title">Instagram</div>
+        <div class="link-desc">Siga para conteúdo exclusivo todo dia</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <a class="link-item" href="https://emgrecimento.netlify.app" target="_blank">
+         <div class="link-icon">🥗</div>
+         <div class="link-content">
+           <div class="link-title">Emagrecer</div>
+           <div class="link-desc">E-book de como Emagrecer de maneira saudável</div>
+         </div>
+         <div class="link-arrow">→</div>
+    </a>
+
+    <a class="link-item" href="https://50pelocelular.netlify.app" target="_blank">
+         <div class="link-icon">🤑</div>
+         <div class="link-content">
+           <div class="link-title">Dinheiro com celular</div>
+           <div class="link-desc">E-book de como fazer dinheiro usando o celular</div>
+         </div>
+         <div class="link-arrow">→</div>
+    </a>
+    <!-- Cole novos links aqui -->
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-gems">
+      <div class="fg"></div>
+      <div class="fg big"></div>
+      <div class="fg"></div>
+    </div>
+    <p>Central dos Guias &nbsp;·&nbsp; Todos os direitos reservados</p>
+  </div>
+
+</div>
+</body>
+</html>
